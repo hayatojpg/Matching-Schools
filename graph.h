@@ -32,13 +32,13 @@ public:
   Escola(int escola, vector<int> habilitacaopretendidas);
 };
 
-void PrintProfessores(vector<Professor *> professores);
-void PrintEscolas(vector<Escola *> escolas);
-void PrintDisponibilidade(vector<Professor *> professores, vector<Escola *> escolas);
-bool VerificaProfessor(vector<Professor *> professores);
-int EscolheProfessor(vector<Professor *> professores);
+void PrintProfessores(vector<Professor> professores);
+void PrintEscolas(vector<Escola> escolas);
+void PrintDisponibilidade(vector<Professor> professores, vector<Escola> escolas);
+bool VerificaProfessor(vector<Professor> *professores);
+int EscolheProfessor(vector<Professor> *professores);
 int GetNiveldePreferencia(Professor prof, int preferencia);
-vector<int> GetEscola(int habilitacao, vector<Escola *> escolas);
-void Emparelhamento(vector<Professor *> professores, vector<Escola *> escolas);
+vector<int> GetEscola(int habilitacao, vector<Escola> *escolas);
+void Emparelhamento(vector<Professor> *professores, vector<Escola> *escolas);
 
 #endif

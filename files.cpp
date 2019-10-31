@@ -70,7 +70,7 @@ string ParseParenthesis(string checkline, vector<int> &intnumbers)
   return checkline;
 }
 
-void Read(string file, vector<Professor *> professores, vector<Escola *> escolas)
+void Read(string file, vector<Professor> *professores, vector<Escola> *escolas)
 {
   fstream FileReader;
   stringstream ParenthesisParser;
@@ -78,8 +78,8 @@ void Read(string file, vector<Professor *> professores, vector<Escola *> escolas
   string checkline;
   int num = 0;
   bool escolastarted = false;
-  Escola *escola = new Escola(0, {});
-  escolas.push_back(escola);
+  Escola escola = Escola(0, {});
+  escolas->push_back(escola);
   if (FileReader.is_open())
   {
     while (!FileReader.eof() && !escolastarted)
@@ -96,8 +96,8 @@ void Read(string file, vector<Professor *> professores, vector<Escola *> escolas
 
       if (!Prof.empty())
       {
-        Professor *professor = new Professor(Prof[1], EscolasOrdenadas);
-        professores.push_back(professor);
+        Professor professor = Professor(Prof[1], EscolasOrdenadas);
+        professores->push_back(professor);
       }
     }
     while (!FileReader.eof())
@@ -122,8 +122,8 @@ void Read(string file, vector<Professor *> professores, vector<Escola *> escolas
       }
       if (!EscolaPars.empty())
       {
-        Escola *escola = new Escola(EscolaPars[0], Habilitacao);
-        escolas.push_back(escola);
+        Escola escola = Escola(EscolaPars[0], Habilitacao);
+        escolas->push_back(escola);
       }
     }
   }

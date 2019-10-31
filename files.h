@@ -9,6 +9,6 @@ using namespace std;
 
 bool IsNumber(char number);
 string ParseParenthesis(string checkline, vector<int> &intnumbers);
-void Read(string file, vector<Professor *> professores, vector<Escola *> escolas);
+void Read(string file, vector<Professor> *professores, vector<Escola> *escolas);
 
 #endif
