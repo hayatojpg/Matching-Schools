@@ -121,7 +121,7 @@ void PrintDisponibilidade(vector<Professor> professores, vector<Escola> escolas)
   {
     if (!professores[i].matched)
     {
-      cout << "* Professor Numero: " << i << endl;
+      cout << "* Professor " << i << endl;
       cout << "\t=> Habilitacao: " << professores[i].habilitacao << endl;
       cout << "\t=> Escolas Pretendidas: ";
       for (int j = 0; j < professores[i].escolas.size(); j++)
@@ -165,7 +165,7 @@ void PrintDisponibilidade(vector<Professor> professores, vector<Escola> escolas)
     {
       if (escolas[i].emparelhado[j] == 999)
       {
-        cout << "Escola Numero: " << i << endl;
+        cout << "Escola " << i << endl;
         cout << "\t"
              << "=> Vaga Nao Preenchida: Habilidade " << escolas[i].habilitacaopretendidas[j] << " Requerida" << endl;
         cout << endl;
