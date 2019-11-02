@@ -1,5 +1,7 @@
 #include "graph.h"
 
+using namespace std;
+
 Professor::Professor(int habilitacao, vector<int> escolas)
 {
   this->habilitacao = habilitacao;
@@ -24,63 +26,83 @@ Escola::Escola(int escola, vector<int> habilitacaopretendidas)
 void PrintProfessores(vector<Professor> professores)
 {
   int profsemmatch = 0;
+  cout << "-----------------------------------------------------" << endl;
+  cout << "PROFESSORES:" << endl;
+  cout << "-----------------------------------------------------" << endl;
+
   for (int i = 0; i < professores.size(); i++)
   {
-    cout << "Professor Numero: " << i << endl;
-    cout << "\t Habilitacao: " << professores[i].habilitacao << endl;
-    cout << "\t Escolas Pretendidas: ";
-    for (int j = 0; j < professores[i].escolas.size(); j++)
-    {
-      cout << professores[i].escolas[j] << " ";
-    }
-    cout << "\t Proposiçoes: " << professores[i].proposicoes << endl;
     if (professores[i].matched)
     {
-      cout << "\t Professor esta Empregado em: " << professores[i].emparelhado << endl;
+      cout << "* Professor " << i + 1 << endl;
+      cout << "\t=> Habilitacao: " << professores[i].habilitacao << endl;
+      cout << "\t=> Escolas Pretendidas: ";
+      for (int j = 0; j < professores[i].escolas.size(); j++)
+      {
+        cout << professores[i].escolas[j] + 1 << " | ";
+      }
+      cout << endl;
+
+      cout << "\n\t=> Professor esta Empregado em: Escola " << professores[i].emparelhado + 1 << endl;
       ;
+      cout << endl;
     }
     else
     {
       profsemmatch++;
     }
-    cout << endl;
-    cout << endl;
   }
-  cout << "Professores sem Match: " << profsemmatch << endl;
+  cout << "-----------------------------------------------------" << endl;
+  cout << "Professores Alocados: " << professores.size() - profsemmatch << endl;
+  cout << "Professores Nao Alocados: " << profsemmatch << endl;
+  cout << "-----------------------------------------------------" << endl;
   cout << endl;
 }
 
 void PrintEscolas(vector<Escola> escolas)
 {
   int vagasemmatch = 0;
+  int escolasemprof = 0;
+
+  cout << "-----------------------------------------------------" << endl;
+  cout << "ESCOLAS:" << endl;
+  cout << "-----------------------------------------------------" << endl;
   for (int i = 1; i < escolas.size(); i++)
   {
-    cout << "Escola Numero: " << i << endl;
-    cout << "\tHabilitacoes Pretendidas: ";
+    cout << "* Escola " << i << endl;
+    cout << "\t=> Habilitacoes Pretendidas: ";
     for (int j = 0; j < escolas[i].habilitacaopretendidas.size(); j++)
     {
-      cout << escolas[i].habilitacaopretendidas[j] << " ";
+      cout << escolas[i].habilitacaopretendidas[j] << " | ";
       // cout << "Vaga esta livre:" << escolas[i].matched[j] << " ";
     }
     cout << endl;
+    int vagas = 0;
     for (int j = 0; j < escolas[i].emparelhado.size(); j++)
     {
       if (escolas[i].emparelhado[j] == 999)
       {
         cout << "\t\t"
-             << "Vaga Nao preenchida" << endl;
+             << "* Vaga Nao Preenchida" << endl;
         vagasemmatch++;
+        vagas++;
       }
       else
       {
         cout << "\t\t"
-             << "Vaga preenchida por: " << escolas[i].emparelhado[j] << endl;
+             << "* Vaga Preenchida Por: Professor " << escolas[i].emparelhado[j] + 1 << endl;
       }
     }
+    if (vagas == escolas[i].emparelhado.size())
+      escolasemprof++;
     cout << endl;
     cout << endl;
   }
+
+  cout << "-----------------------------------------------------" << endl;
   cout << "Vagas Disponiveis: " << vagasemmatch << endl;
+  cout << "Escolas Sem Professor: " << escolasemprof << endl;
+  cout << "-----------------------------------------------------" << endl;
   cout << endl;
 }
 
@@ -90,58 +112,24 @@ void PrintDisponibilidade(vector<Professor> professores, vector<Escola> escolas)
   um = 0;
   dois = 0;
   tres = 0;
+  cout << "\n-----------------------------------------------------" << endl;
+  cout << "\t\tVAGAS NAO PREENCHIDAS:" << endl;
+  cout << "-----------------------------------------------------" << endl;
+  cout << "PROFESSORES:" << endl;
+  cout << "-----------------------------------------------------" << endl;
   for (int i = 0; i < professores.size(); i++)
   {
     if (!professores[i].matched)
     {
-      cout << "Professor Numero: " << i << endl;
-      cout << "\t Habilitacao: " << professores[i].habilitacao << endl;
-      cout << "\t Escolas Pretendidas: ";
+      cout << "* Professor Numero: " << i << endl;
+      cout << "\t=> Habilitacao: " << professores[i].habilitacao << endl;
+      cout << "\t=> Escolas Pretendidas: ";
       for (int j = 0; j < professores[i].escolas.size(); j++)
       {
-        cout << professores[i].escolas[j] << " ";
+        cout << professores[i].escolas[j] << " | ";
       }
-      cout << "\t Proposiçoes: " << professores[i].proposicoes << endl;
       cout << endl;
-    }
-    switch (professores[i].habilitacao)
-    {
-    case 1:
-      um++;
-      break;
-    case 2:
-      dois++;
-      break;
-    case 3:
-      tres++;
-      break;
-    default:
-      break;
-    }
-  }
-  cout << um << endl;
-  cout << dois << endl;
-  cout << tres << endl;
-  cout << endl;
-
-  um = 0;
-  dois = 0;
-  tres = 0;
-  for (int i = 1; i < escolas.size(); i++)
-  {
-    for (int j = 0; j < escolas[i].emparelhado.size(); j++)
-    {
-      if (escolas[i].emparelhado[j] == 999)
-      {
-        cout << "Escola Numero: " << i << endl;
-        cout << "\t\t"
-             << "Vaga Nao preenchida : " << escolas[i].habilitacaopretendidas[j] << endl;
-        cout << endl;
-      }
-    }
-    for (int j = 0; j < escolas[i].habilitacaopretendidas.size(); j++)
-    {
-      switch (escolas[i].habilitacaopretendidas[j])
+      switch (professores[i].habilitacao)
       {
       case 1:
         um++;
@@ -157,9 +145,52 @@ void PrintDisponibilidade(vector<Professor> professores, vector<Escola> escolas)
       }
     }
   }
-  cout << um << endl;
-  cout << dois << endl;
-  cout << tres << endl;
+  cout << "-----------------------------------------------------" << endl;
+  cout << "* Professores Com Habilidade 1 Sem Vaga: " << um << endl;
+  cout << "* Professores Com Habilidade 2 Sem Vaga: " << dois << endl;
+  cout << "* Professores Com Habilidade 3 Sem Vaga: " << tres << endl;
+  cout << "-----------------------------------------------------" << endl;
+  cout << endl;
+
+  um = 0;
+  dois = 0;
+  tres = 0;
+
+  cout << "-----------------------------------------------------" << endl;
+  cout << "ESCOLAS:" << endl;
+  cout << "-----------------------------------------------------" << endl;
+  for (int i = 1; i < escolas.size(); i++)
+  {
+    for (int j = 0; j < escolas[i].emparelhado.size(); j++)
+    {
+      if (escolas[i].emparelhado[j] == 999)
+      {
+        cout << "Escola Numero: " << i << endl;
+        cout << "\t"
+             << "=> Vaga Nao Preenchida: Habilidade " << escolas[i].habilitacaopretendidas[j] << " Requerida" << endl;
+        cout << endl;
+        switch (escolas[i].habilitacaopretendidas[j])
+        {
+        case 1:
+          um++;
+          break;
+        case 2:
+          dois++;
+          break;
+        case 3:
+          tres++;
+          break;
+        default:
+          break;
+        }
+      }
+    }
+  }
+  cout << "-----------------------------------------------------" << endl;
+  cout << "* Necessidade de Professores Com Habilidade 1: " << um << endl;
+  cout << "* Necessidade de Professores Com Habilidade 2: " << dois << endl;
+  cout << "* Necessidade de Professores Com Habilidade 3: " << tres << endl;
+  cout << "-----------------------------------------------------" << endl;
 }
 
 //verifica se as escolas podem ainda ser mexidas
@@ -227,7 +258,6 @@ vector<int> GetEscola(int habilitacao, vector<Escola> *escolas)
   return x;
 }
 
-//faz os Emparelhamento
 void Emparelhamento(vector<Professor> *professores, vector<Escola> *escolas)
 {
   //verifica se tem professores livres ainda
@@ -236,11 +266,9 @@ void Emparelhamento(vector<Professor> *professores, vector<Escola> *escolas)
   {
     //escolhe um professore livre e que nao tenha pedido pra todas as escolas
     professores->at(i).proposicoes++;
-    // cout << "Professor Atual: " << i << " Proposicoes: " << professores[i].proposicoes << endl;
     for (int j = 0; j < professores->at(i).escolas.size(); j++)
     {
       int escolaAtual = professores->at(i).escolas[j];
-      // cout << "\tEscola Atual: " << escolaAtual << endl;
       for (int x = 0; x < escolas->at(escolaAtual).habilitacaopretendidas.size(); x++)
       {
         //se a escola n for escolhida ainda e a escola tiver interesse na habilidade do profesor ele entra nesse if
@@ -253,7 +281,7 @@ void Emparelhamento(vector<Professor> *professores, vector<Escola> *escolas)
             escolas->at(escolaAtual).matched[x] = true;
             escolas->at(escolaAtual).emparelhado[x] = i;
             cout << endl;
-            cout << "\tMatched 1: " << i << " and " << escolaAtual << endl;
+            //cout << "\tMatched 1: " << i + 1 << " and " << escolaAtual + 1 << endl;
             break;
           }
           //verifica se a escola ja foi escolhida e verifica se a preferencia do match anterior eh maior que a preferencia do professor atual, nesse caso entra nesse if
@@ -266,7 +294,7 @@ void Emparelhamento(vector<Professor> *professores, vector<Escola> *escolas)
               professores->at(i).emparelhado = escolaAtual;
               professores->at(i).matched = true;
               escolas->at(escolaAtual).emparelhado[x] = i;
-              cout << "\tMatched 2: " << i << " and " << escolaAtual << endl;
+              //cout << "\tMatched 2: " << i + 1 << " and " << escolaAtual + 1 << endl;
               break;
             }
           }
@@ -285,7 +313,7 @@ void Emparelhamento(vector<Professor> *professores, vector<Escola> *escolas)
       professores->at(i).matched = true;
       escolas->at(x[0]).emparelhado[x[1]] = i;
       escolas->at(x[0]).matched[x[1]] = true;
-      cout << "\tMatched 3: " << i << " and " << x[0] << endl;
+      //cout << "\tMatched 3: " << i + 1 << " and " << x[0] + 1 << endl;
     }
     i = EscolheProfessor(professores);
   }
